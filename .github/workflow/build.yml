@@ -1,0 +1,26 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    name: amazon-connect-bootcamp
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.25
+
+      - name: Terraform Apply
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform apply
