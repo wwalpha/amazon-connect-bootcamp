@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::connect-dd6118f52dbf/*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}

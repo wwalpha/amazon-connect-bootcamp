@@ -1,0 +1,31 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "kms:decrypt"
+      ],
+      "Resource": "arn:aws:kms:ap-northeast-1:*:key/*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:CreateLogGroup",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:*:*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:PutSecretValue"
+      ],
+      "Resource": "arn:aws:secretsmanager:ap-northeast-1:*:secret:*",
+      "Effect": "Allow"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectAcl"
+      ],
+      "Resource": [
+        "arn:aws:s3:::connect-dd6118f52dbf/*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::connect-dd6118f52dbf/*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "transcribe:StartTranscriptionJob"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}

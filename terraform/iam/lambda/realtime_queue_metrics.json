@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "connect:ListQueues",
+        "connect:GetCurrentMetricData"
+      ],
+      "Resource": [
+        "arn:aws:connect:ap-northeast-1:*:instance/auto-notification/*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}

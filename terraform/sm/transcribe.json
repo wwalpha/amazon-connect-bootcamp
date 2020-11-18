@@ -1,0 +1,81 @@
+{
+  "Comment": "A state machine that submits a Job to transcribe audio",
+  "StartAt": "Submit Transcription Job",
+  "States": {
+      "Submit Transcription Job": {
+          "Type": "Task",
+          "Resource": "arn:aws:lambda:ap-northeast-1:*:function:serverlessrepo-AmazonConnect-sfSubmitTranscribeJob-WV35GLQJV1OQ",
+          "ResultPath": "$.TranscriptionJob",
+          "Next": "Wait X Seconds",
+          "Retry": [
+              {
+                  "ErrorEquals": [
+                      "States.ALL"
+                  ],
+                  "IntervalSeconds": 20,
+                  "MaxAttempts": 3,
+                  "BackoffRate": 2
+              }
+          ]
+      },
+      "Wait X Seconds": {
+          "Type": "Wait",
+          "SecondsPath": "$.wait_time",
+          "Next": "Get Transcription Job Status"
+      },
+      "Get Transcription Job Status": {
+          "Type": "Task",
+          "Resource": "arn:aws:lambda:ap-northeast-1:*:function:serverlessrepo-AmazonConn-sfGetTranscribeJobStatus-1CR92H82FWF2U",
+          "Next": "Job Complete?",
+          "InputPath": "$.TranscriptionJob",
+          "ResultPath": "$.TranscriptionJob",
+          "Retry": [
+              {
+                  "ErrorEquals": [
+                      "States.ALL"
+                  ],
+                  "IntervalSeconds": 20,
+                  "MaxAttempts": 3,
+                  "BackoffRate": 2
+              }
+          ]
+      },
+      "Job Complete?": {
+          "Type": "Choice",
+          "Choices": [
+              {
+                  "Variable": "$.TranscriptionJob.TranscriptionJobStatus",
+                  "StringEquals": "FAILED",
+                  "Next": "Job Failed"
+              },
+              {
+                  "Variable": "$.TranscriptionJob.TranscriptionJobStatus",
+                  "StringEquals": "COMPLETED",
+                  "Next": "Process Transcription Result"
+              }
+          ],
+          "Default": "Wait X Seconds"
+      },
+      "Job Failed": {
+          "Type": "Fail",
+          "Cause": "Transcription job Failed",
+          "Error": "Transcription job FAILED"
+      },
+      "Process Transcription Result": {
+          "Type": "Task",
+          "Resource": "arn:aws:lambda:ap-northeast-1:*:function:serverlessrepo-AmazonConn-sfProcessTranscriptionRe-13ML7EOUE4WI2",
+          "InputPath": "$",
+          "End": true,
+          "Retry": [
+              {
+                  "ErrorEquals": [
+                      "States.ALL"
+                  ],
+                  "IntervalSeconds": 20,
+                  "MaxAttempts": 3,
+                  "BackoffRate": 2
+              }
+          ]
+      }
+  }
+}
