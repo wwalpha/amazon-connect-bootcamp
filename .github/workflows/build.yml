@@ -35,6 +35,9 @@ jobs:
           TF_VAR_sfdc_password: ${{ secrets.SFDC_PASSWORD }}
 
   App:
+    needs:
+      - Infrastructure
+
     name: application build and deploy
     runs-on: ubuntu-latest
 
