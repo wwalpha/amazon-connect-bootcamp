@@ -39,8 +39,8 @@ jobs:
           terraform plan -no-color
           terraform apply -auto-approve
         env:
-          SFDC_CONSUMER_KEY: ${{ secrets.SFDC_CONSUMER_KEY }}
-          SFDC_CONSUMER_SECRET: ${{ secrets.SFDC_CONSUMER_SECRET }}
-          SFDC_ACCESS_TOKEN: ${{ secrets.SFDC_ACCESS_TOKEN }}
-          SFDC_USERNAME: ${{ secrets.SFDC_USERNAME }}
-          SFDC_PASSWORD: ${{ secrets.SFDC_PASSWORD }}
+          TF_VAR_SFDC_CONSUMER_KEY: ${{ secrets.SFDC_CONSUMER_KEY }}
+          TF_VAR_SFDC_CONSUMER_SECRET: ${{ secrets.SFDC_CONSUMER_SECRET }}
+          TF_VAR_SFDC_ACCESS_TOKEN: ${{ secrets.SFDC_ACCESS_TOKEN }}
+          TF_VAR_SFDC_USERNAME: ${{ secrets.SFDC_USERNAME }}
+          TF_VAR_SFDC_PASSWORD: ${{ secrets.SFDC_PASSWORD }}
