@@ -34,8 +34,8 @@ resource "aws_lambda_function" "sfdc_ctr_trigger" {
   timeout       = 20
   environment {
     variables = {
-      EXECUTE_TRANSCRIPTION_STATE_MACHINE_LAMBDA = aws_lambda_function.sf_exec_transcription_state_machine.name
-      EXECUTE_CTR_IMPORT_LAMBDA                  = aws_lambda_function.sfdc_contact_trace_record.name
+      EXECUTE_TRANSCRIPTION_STATE_MACHINE_LAMBDA = aws_lambda_function.sf_exec_transcription_state_machine.id
+      EXECUTE_CTR_IMPORT_LAMBDA                  = aws_lambda_function.sfdc_contact_trace_record.id
       POSTCALL_RECORDING_IMPORT_ENABLED          = "true"
       POSTCALL_CTR_IMPORT_ENABLED                = "true"
       POSTCALL_TRANSCRIBE_ENABLED                = "true"

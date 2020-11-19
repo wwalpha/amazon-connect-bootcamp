@@ -1,33 +1,33 @@
 # ----------------------------------------------------------------------------------------------
 # Dynamodb Table - Call History
 # ----------------------------------------------------------------------------------------------
-# resource "aws_dynamodb_table" "call_history" {
-#   name           = "CallHistory"
-#   billing_mode   = "PROVISIONED"
-#   write_capacity = 2
-#   read_capacity  = 2
-#   hash_key       = "Timestamp"
-#   range_key      = "CallerId"
+resource "aws_dynamodb_table" "call_history" {
+  name           = "CallHistory"
+  billing_mode   = "PROVISIONED"
+  write_capacity = 2
+  read_capacity  = 2
+  hash_key       = "Timestamp"
+  range_key      = "CallerId"
 
-#   attribute {
-#     name = "Timestamp"
-#     type = "S"
-#   }
+  attribute {
+    name = "Timestamp"
+    type = "S"
+  }
 
-#   attribute {
-#     name = "CallerId"
-#     type = "S"
-#   }
+  attribute {
+    name = "CallerId"
+    type = "S"
+  }
 
-#   global_secondary_index {
-#     name            = "gsiIdx1"
-#     hash_key        = "CallerId"
-#     range_key       = "Timestamp"
-#     write_capacity  = 2
-#     read_capacity   = 2
-#     projection_type = "INCLUDE"
-#   }
-# }
+  global_secondary_index {
+    name            = "gsiIdx1"
+    hash_key        = "CallerId"
+    range_key       = "Timestamp"
+    write_capacity  = 2
+    read_capacity   = 2
+    projection_type = "INCLUDE"
+  }
+}
 
 # ----------------------------------------------------------------------------------------------
 # Secret Manager - Salesforce
