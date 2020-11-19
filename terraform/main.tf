@@ -3,12 +3,10 @@ provider "aws" {
 }
 
 terraform {
-  backend "remote" {
-    organization = "wwalpha"
-
-    workspaces {
-      name = "amazon-connect-bootcamp"
-    }
+  backend "s3" {
+    bucket = "amazon-connect-bootcamp2020"
+    region = "ap-northeast-1"
+    key    = "terraform"
   }
 
   required_version = ">= 0.13.5"
