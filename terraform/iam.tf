@@ -94,7 +94,7 @@ resource "aws_iam_role_policy" "sf_realtime_queue_metrics" {
 # IAM Role - StepFunction Submit Transcribe Job
 # ----------------------------------------------------------------------------------------------
 resource "aws_iam_role" "sf_submit_transcribe_job" {
-  name               = "BootCamp_SF_Submit_Transcribe_JOB"
+  name               = "BootCamp_SF_SubmitTranscribeJob"
   assume_role_policy = file("iam/principal/lambda.json")
 }
 
@@ -120,7 +120,7 @@ resource "aws_iam_role_policy" "sfdc_ctr_trigger" {
 # IAM Role - StateMachine RealTime Queue Metrics Loop
 # ----------------------------------------------------------------------------------------------
 resource "aws_iam_role" "sm_realtime_queue_metrics_loop" {
-  name               = "BootCamp_RealTimeQueueMetricsLoop"
+  name               = "BootCamp_SM_RealTimeQueueMetricsLoop"
   assume_role_policy = file("iam/principal/step_function.json")
 }
 
@@ -133,7 +133,7 @@ resource "aws_iam_role_policy" "sm_realtime_queue_metrics_loop" {
 # IAM Role - StateMachine Transcribe
 # ----------------------------------------------------------------------------------------------
 resource "aws_iam_role" "sm_transcribe" {
-  name               = "BootCamp_Transcribe"
+  name               = "BootCamp_SM_Transcribe"
   assume_role_policy = file("iam/principal/step_function.json")
 }
 

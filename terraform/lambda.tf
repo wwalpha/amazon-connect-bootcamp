@@ -12,7 +12,7 @@ resource "aws_lambda_function" "sfdc_invoke_api" {
   environment {
     variables = {
       SF_HOST                            = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN = aws_secretsmanager_secret.salesforce.arn
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
@@ -34,8 +34,8 @@ resource "aws_lambda_function" "sfdc_ctr_trigger" {
   timeout       = 20
   environment {
     variables = {
-      EXECUTE_TRANSCRIPTION_STATE_MACHINE_LAMBDA = "serverlessrepo-AmazonConn-sfExecuteTranscriptionSt-6I3PEV335TD4"
-      EXECUTE_CTR_IMPORT_LAMBDA                  = aws_lambda_function.sfdc_contact_trace_record.arn
+      EXECUTE_TRANSCRIPTION_STATE_MACHINE_LAMBDA = aws_lambda_function.sf_exec_transcription_state_machine.name
+      EXECUTE_CTR_IMPORT_LAMBDA                  = aws_lambda_function.sfdc_contact_trace_record.name
       POSTCALL_RECORDING_IMPORT_ENABLED          = "true"
       POSTCALL_CTR_IMPORT_ENABLED                = "true"
       POSTCALL_TRANSCRIBE_ENABLED                = "true"
@@ -57,7 +57,7 @@ resource "aws_lambda_function" "sfdc_contact_trace_record" {
   environment {
     variables = {
       SF_HOST                            = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN = aws_secretsmanager_secret.salesforce.arn
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
@@ -98,7 +98,7 @@ resource "aws_lambda_function" "sf_realtime_queue_metrics" {
   environment {
     variables = {
       SF_HOST                                = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN     = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN     = aws_secretsmanager_secret.salesforce.arn
       SF_PRODUCTION                          = "false"
       SF_VERSION                             = var.sf_version
       SF_ADAPTER_NAMESPACE                   = "amazonconnect"
@@ -124,7 +124,7 @@ resource "aws_lambda_function" "sf_interval_queue" {
   environment {
     variables = {
       SF_HOST                            = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN = aws_secretsmanager_secret.salesforce.arn
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
@@ -147,7 +147,7 @@ resource "aws_lambda_function" "sf_interval_agent" {
   environment {
     variables = {
       SF_HOST                            = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN = aws_secretsmanager_secret.salesforce.arn
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
@@ -217,7 +217,7 @@ resource "aws_lambda_function" "sf_exec_transcription_state_machine" {
     variables = {
       TRANSCRIPTS_DESTINATION_KMS  = ""
       MEDIA_FORMAT                 = "wav"
-      TRANSCRIBE_STATE_MACHINE_ARN = "arn:aws:states:ap-northeast-1:925866981400:stateMachine:sfTranscribeStateMachine-kUjUOn9gmBXl"
+      TRANSCRIBE_STATE_MACHINE_ARN = aws_sfn_state_machine.transcribe.arn
       WAIT_TIME                    = "20"
       SF_ADAPTER_NAMESPACE         = "amazonconnect"
       TRANSCRIPTS_DESTINATION      = "connect-dd6118f52dbf"
@@ -240,8 +240,8 @@ resource "aws_lambda_function" "sf_generate_audio_recoding_streaming_url" {
   environment {
     variables = {
       SF_HOST                             = var.sf_host
-      SF_CREDENTIALS_SECRETS_MANAGER_ARN  = "arn:aws:secretsmanager:ap-northeast-1:925866981400:secret:prod/bootcamp-DzYOOq"
-      CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME = "d1j9073lrth7y0.cloudfront.net"
+      SF_CREDENTIALS_SECRETS_MANAGER_ARN  = aws_secretsmanager_secret.salesforce.arn
+      CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME = "d1j9073lrth7y1.cloudfront.net"
     }
   }
 }

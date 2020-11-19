@@ -33,7 +33,7 @@
 # Secret Manager - Salesforce
 # ----------------------------------------------------------------------------------------------
 resource "aws_secretsmanager_secret" "salesforce" {
-  name = "bootcamp-salefoces-credentials"
+  name = "bootcamp-salesforce-credentials"
 }
 
 # ----------------------------------------------------------------------------------------------
