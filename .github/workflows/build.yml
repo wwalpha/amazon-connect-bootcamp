@@ -31,17 +31,6 @@ jobs:
           yarn install
           yarn build
 
-  Deploy:
-    needs:
-      - Build
-
-    name: terraform build and apply
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-  
       - name: Terraform Plan and Apply
         working-directory: terraform
         run: |
@@ -56,4 +45,3 @@ jobs:
           TF_VAR_sfdc_consumer_secret: ${{ secrets.SFDC_CONSUMER_SECRET }}
           TF_VAR_sfdc_username: ${{ secrets.SFDC_USERNAME }}
           TF_VAR_sfdc_password: ${{ secrets.SFDC_PASSWORD }}
-
