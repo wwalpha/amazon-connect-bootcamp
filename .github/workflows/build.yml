@@ -36,7 +36,7 @@ jobs:
         working-directory: terraform
         run: terraform init
 
-      - name: Terraform Init
+      - name: Terraform Plan
         working-directory: terraform
         run: terraform plan -no-color
         env:
@@ -46,7 +46,7 @@ jobs:
           TF_VAR_sfdc_username: ${{ secrets.SFDC_USERNAME }}
           TF_VAR_sfdc_password: ${{ secrets.SFDC_PASSWORD }}
 
-      - name: Terraform Init
+      - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve -no-color
         env:
