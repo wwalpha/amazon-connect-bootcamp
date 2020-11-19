@@ -1,3 +1,4 @@
+
 # ----------------------------------------------------------------------------------------------
 # Dynamodb Table - Call History
 # ----------------------------------------------------------------------------------------------
@@ -20,20 +21,22 @@ resource "aws_dynamodb_table" "call_history" {
   }
 
   global_secondary_index {
-    name            = "gsiIdx1"
-    hash_key        = "CallerId"
-    range_key       = "Timestamp"
-    write_capacity  = 2
-    read_capacity   = 2
-    projection_type = "INCLUDE"
+    name               = "gsiIdx1"
+    hash_key           = "CallerId"
+    range_key          = "Timestamp"
+    write_capacity     = 2
+    read_capacity      = 2
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["Timestamp"]
   }
 }
+
 
 # ----------------------------------------------------------------------------------------------
 # Secret Manager - Salesforce
 # ----------------------------------------------------------------------------------------------
 resource "aws_secretsmanager_secret" "salesforce" {
-  name = "bootcamp-salesforce-credentials"
+  name = "bootcamp-salesforce-credential"
 }
 
 # ----------------------------------------------------------------------------------------------

@@ -2,13 +2,14 @@
 # Lambda Function - Salesforce Invoke API
 # ----------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "sfdc_invoke_api" {
-  filename      = "index.zip"
-  function_name = "bootcamp-sfdc-invoke-api"
-  handler       = "index.handler"
-  memory_size   = 256
-  role          = aws_iam_role.sfdc_invoke_api.arn
-  runtime       = "nodejs12.x"
-  timeout       = 6
+  filename         = data.archive_file.sfdc_invoke_api.output_path
+  source_code_hash = data.archive_file.sfdc_invoke_api.output_base64sha256
+  function_name    = "bootcamp-sfdc-invoke-api"
+  handler          = "index.handler"
+  memory_size      = 256
+  role             = aws_iam_role.sfdc_invoke_api.arn
+  runtime          = "nodejs12.x"
+  timeout          = 6
   environment {
     variables = {
       SF_HOST                            = var.sf_host
@@ -16,22 +17,29 @@ resource "aws_lambda_function" "sfdc_invoke_api" {
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
-      SF_USERNAME                        = "wwalpha@gmail.com"
+      SF_USERNAME                        = var.sfdc_username
     }
   }
+}
+
+data "archive_file" "sfdc_invoke_api" {
+  type        = "zip"
+  source_dir  = "../dist/sfdcInvokeAPI"
+  output_path = "../dist/sfdcInvokeAPI.zip"
 }
 
 # ----------------------------------------------------------------------------------------------
 # Lambda Function - Salesforce CTR Trigger
 # ----------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "sfdc_ctr_trigger" {
-  filename      = "index.zip"
-  function_name = "bootcamp-sfdc-ctr-trigger"
-  handler       = "index.handler"
-  memory_size   = 256
-  role          = aws_iam_role.sfdc_ctr_trigger.arn
-  runtime       = "nodejs12.x"
-  timeout       = 20
+  filename         = data.archive_file.sfdc_ctr_trigger.output_path
+  source_code_hash = data.archive_file.sfdc_ctr_trigger.output_base64sha256
+  function_name    = "bootcamp-sfdc-ctr-trigger"
+  handler          = "index.handler"
+  memory_size      = 256
+  role             = aws_iam_role.sfdc_ctr_trigger.arn
+  runtime          = "nodejs12.x"
+  timeout          = 20
   environment {
     variables = {
       EXECUTE_TRANSCRIPTION_STATE_MACHINE_LAMBDA = aws_lambda_function.sf_exec_transcription_state_machine.id
@@ -41,6 +49,12 @@ resource "aws_lambda_function" "sfdc_ctr_trigger" {
       POSTCALL_TRANSCRIBE_ENABLED                = "true"
     }
   }
+}
+
+data "archive_file" "sfdc_ctr_trigger" {
+  type        = "zip"
+  source_dir  = "../dist/sfCtrTrigger"
+  output_path = "../dist/sfCtrTrigger.zip"
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -61,7 +75,7 @@ resource "aws_lambda_function" "sfdc_contact_trace_record" {
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
-      SF_USERNAME                        = "wwalpha@gmail.com"
+      SF_USERNAME                        = var.sfdc_username
     }
   }
 }
@@ -102,7 +116,7 @@ resource "aws_lambda_function" "sf_realtime_queue_metrics" {
       SF_PRODUCTION                          = "false"
       SF_VERSION                             = var.sf_version
       SF_ADAPTER_NAMESPACE                   = "amazonconnect"
-      SF_USERNAME                            = "wwalpha@gmail.com"
+      SF_USERNAME                            = var.sfdc_username
       AMAZON_CONNECT_INSTANCE_ID             = var.connect_instance_id
       AMAZON_CONNECT_QUEUE_MAX_RESULT        = "100"
       AMAZON_CONNECT_QUEUEMETRICS_MAX_RESULT = "100"
@@ -114,13 +128,14 @@ resource "aws_lambda_function" "sf_realtime_queue_metrics" {
 # Lambda Function - StepFunction Interval Queue
 # ----------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "sf_interval_queue" {
-  filename      = "index.zip"
-  function_name = "bootcamp-sf-interval-queue"
-  handler       = "index.handle"
-  memory_size   = 256
-  role          = aws_iam_role.sf_interval_queue.arn
-  runtime       = "nodejs12.x"
-  timeout       = 60
+  filename         = data.archive_file.sf_interval_queue.output_path
+  source_code_hash = data.archive_file.sf_interval_queue.output_base64sha256
+  function_name    = "bootcamp-sf-interval-queue"
+  handler          = "index.handle"
+  memory_size      = 256
+  role             = aws_iam_role.sf_interval_queue.arn
+  runtime          = "nodejs12.x"
+  timeout          = 60
   environment {
     variables = {
       SF_HOST                            = var.sf_host
@@ -128,22 +143,29 @@ resource "aws_lambda_function" "sf_interval_queue" {
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
-      SF_USERNAME                        = "wwalpha@gmail.com"
+      SF_USERNAME                        = var.sfdc_username
     }
   }
+}
+
+data "archive_file" "sf_interval_queue" {
+  type        = "zip"
+  source_dir  = "../dist/sfIntervalQueue"
+  output_path = "../dist/sfIntervalQueue.zip"
 }
 
 # ----------------------------------------------------------------------------------------------
 # Lambda Function - StepFunction Interval Agent
 # ----------------------------------------------------------------------------------------------
 resource "aws_lambda_function" "sf_interval_agent" {
-  filename      = "index.zip"
-  function_name = "bootcamp-sf-interval-agent"
-  handler       = "index.handler"
-  memory_size   = 256
-  role          = aws_iam_role.sf_interval_agent.arn
-  runtime       = "nodejs12.x"
-  timeout       = 60
+  filename         = data.archive_file.sf_interval_agent.output_path
+  source_code_hash = data.archive_file.sf_interval_agent.output_base64sha256
+  function_name    = "bootcamp-sf-interval-agent"
+  handler          = "index.handler"
+  memory_size      = 256
+  role             = aws_iam_role.sf_interval_agent.arn
+  runtime          = "nodejs12.x"
+  timeout          = 60
   environment {
     variables = {
       SF_HOST                            = var.sf_host
@@ -151,11 +173,16 @@ resource "aws_lambda_function" "sf_interval_agent" {
       SF_PRODUCTION                      = "false"
       SF_VERSION                         = var.sf_version
       SF_ADAPTER_NAMESPACE               = "amazonconnect"
-      SF_USERNAME                        = "wwalpha@gmail.com"
+      SF_USERNAME                        = var.sfdc_username
     }
   }
 }
 
+data "archive_file" "sf_interval_agent" {
+  type        = "zip"
+  source_dir  = "../dist/sfIntervalAgent"
+  output_path = "../dist/sfIntervalAgent.zip"
+}
 
 # ----------------------------------------------------------------------------------------------
 # Lambda Function - StepFunction Submit Transcribe Job
